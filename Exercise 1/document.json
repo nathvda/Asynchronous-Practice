@@ -1,0 +1,17 @@
+[
+    {
+   "country" : "Belgium",
+   "capital" : "Bruxelles",
+   "continent" : "Europe"
+    }, 
+    {
+   "country" : "France",
+   "capital" : "Paris",
+   "continent" : "Europe"
+    },
+    {
+    "country" : "Spain",
+    "capital" : "Madrid",
+    "continent" : "Europe"
+    }
+]
