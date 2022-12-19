@@ -1,10 +1,18 @@
 document.getElementById("clickMe").addEventListener('click', ageQuery);
 
 let previouslyFetched = [];
-
+previouslyFetched = JSON.parse(localStorage.getItem("previous"));
+if ( previouslyFetched == null) {
+    previouslyFetched = [];
+}
+ 
 async function ageQuery(){
    
    try { 
+
+    if ( previouslyFetched == null) {
+        previouslyFetched = [];
+    }
     let whatName = document.getElementById("searchedName").value;
     let whatCountry = document.getElementById("country").selectedIndex;
     let countryIden = document.getElementById("country").querySelectorAll("option")[whatCountry];
@@ -13,7 +21,9 @@ async function ageQuery(){
     let ageQueried = await fetch(`https://api.agify.io?name=${whatName}&country_id=${country}`);
     let ageQueriedText = await ageQueried.json();
 
-    previouslyFetched = previouslyFetched.push(ageQueriedText);
+    previouslyFetched.push(ageQueriedText);
+
+    localStorage.setItem("previous", JSON.stringify(previouslyFetched));
 
     let element = document.createElement("div");
     element.innerHTML = `name : ${ageQueriedText.name} <br/>
@@ -21,18 +31,13 @@ async function ageQuery(){
     country : ${ageQueriedText.country_id}`;
     document.body.appendChild(element);
 
-    localStorage.setItem("previously", JSON.stringify(previouslyFetched));
-
-
 } catch (e) {
     console.log("couldn't retrieve data");
 }
+
 }
 
 function displayOldQueries(){
-    let getStorage = localStorage.getItem("previously");
-previouslyFetched.push(JSON.parse(getStorage));
-
     for (let elem of previouslyFetched){
         let element = document.createElement("div");
         element.innerHTML = `name : ${elem.name} <br/>
